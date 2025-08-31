@@ -1,8 +1,5 @@
 import Image from "next/image";
 import { Geist, Geist_Mono } from "next/font/google";
-import axios from "axios";
-import { useEffect, useState } from "react";
-import PropertyCard from "@/components/property/PropertyDetail"; // Assume this component exists
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,40 +12,6 @@ const geistMono = Geist_Mono({
 });
 
 export default function Home() {
-  const [properties, setProperties] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-
-  useEffect(() => {
-    const fetchProperties = async () => {
-      try {
-        const response = await axios.get("/api/properties");
-        setProperties(response.data);
-      } catch (error) {
-        console.error("Error fetching properties:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProperties();
-  }, []);
-
-  if (loading) {
-    return <p>Loading...</p>;
-  }
-
-
-  return (
-    <div className="grid grid-cols-3 gap-4">
-      {properties.map((property) => (
-        <PropertyCard key={property.id} property={property} />
-      ))}
-    </div>
-  );
-}
-
-
   return (
     <div
       className={`${geistSans.className} ${geistMono.className} grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]`}
