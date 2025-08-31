@@ -1,39 +1,33 @@
-import { PropertyProps } from "@/interfaces/index";
+// components/property/PropertyDetail.tsx
+import React from "react";
 
-const PropertyDetail: React.FC<{ property: PropertyProps }> = ({ property }) => {
+interface PropertyDetailProps {
+  property: {
+    id: string;
+    title: string;
+    description: string;
+    price: number;
+    location: string;
+    imageUrl?: string;
+  };
+}
+
+export default function PropertyDetail({ property }: PropertyDetailProps) {
   return (
-    <div className="container mx-auto p-6">
-      <h1 className="text-4xl font-bold">{property.name}</h1>
-      <div className="flex items-center space-x-2 mt-2">
-        <span className="text-yellow-500">{property.rating} stars</span>
-        <span>{property.address.city}, {property.address.country}</span>
-      </div>
-
-      {/* Image Grid */}
-      <div className="grid grid-cols-2 gap-4 mt-4">
-        <img src={property.image} alt={property.name} className="col-span-2 w-full h-96 object-cover rounded-lg" />
-        {/* Add more images */}
-      </div>
-
-      {/* Description */}
-      <div className="mt-4">
-        <h2 className="text-2xl font-semibold">Description</h2>
-        <p>{property.description}</p>
-      </div>
-
-      {/* Amenities */}
-      <div className="mt-4">
-        <h2 className="text-2xl font-semibold">What this place offers</h2>
-        <ul className="flex flex-wrap space-x-4">
-          {property.amenities && property.amenities.map((amenity: string, index: number) => (
-            <li key={index} className="bg-gray-200 p-2 rounded-md">
-              {amenity}
-            </li>
-          ))}
-        </ul>
-      </div>
+    <div className="p-6 max-w-3xl mx-auto bg-white shadow-lg rounded-lg">
+      {property.imageUrl && (
+        <img
+          src={property.imageUrl}
+          alt={property.title}
+          className="w-full h-64 object-cover rounded-lg mb-4"
+        />
+      )}
+      <h1 className="text-2xl font-bold mb-2">{property.title}</h1>
+      <p className="text-gray-700 mb-4">{property.description}</p>
+      <p className="text-lg font-semibold text-blue-600">
+        ${property.price.toLocaleString()}
+      </p>
+      <p className="text-gray-500">{property.location}</p>
     </div>
   );
-};
-
-export default PropertyDetail;
+}
